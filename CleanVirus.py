@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
-# 开发者公众号: iOS过审计技术
+# 开发者公众号: iOS过审技术
 
 import os
 import shutil
