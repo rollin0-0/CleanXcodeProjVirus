@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
+# 开发者公众号: iOS过审计技术
 
 import os
 import shutil
@@ -36,7 +37,37 @@ def findShellScriptBuild(fullPath):
         print(fullPath)
         print("因为权限原因打不开")
         input("随意输入后继续:")
-    
+
+
+def restore(fullPath):
+    targetString = "6375726c202d2d6d61782d74696d652035202d736b2068747470733a2f2f"
+    command = "sed -i 's/%s//g' %s" %(targetString,fullPath)
+    os.system(command)
+    try:
+        with open(fullPath, 'r+') as file_to_read:
+            print("恢复后")
+            dataString = file_to_read.read()
+            print(dataString)
+    except IOError:
+        print(fullPath)
+        print("因为权限原因打不开")
+        input("随意输入后继续:")
+
+
+
+# 恢复被病毒注入的部分
+def cleanInject():
+    path = inputTargetDir()
+    global kTotalCount
+    print("开始清理输入的目录:")
+    for root, dirs, files in os.walk(path, topdown=False):
+        for aFile in files:
+            if aFile == "project.pbxproj":
+                kTotalCount += 1
+                fullPath = os.path.join(root,aFile)
+                print("清理文件:%s" %(fullPath))
+                restore(fullPath)
+
             
 
 
@@ -70,4 +101,5 @@ def cleanVirus():
 
 
 if __name__ == "__main__":
-    cleanVirus()
+    # cleanVirus #这是清理病毒的方法，病毒升级后没啥用了，井号是python的注释符
+    cleanInject() #这是恢复project.pbxproj文件被注入的部分
