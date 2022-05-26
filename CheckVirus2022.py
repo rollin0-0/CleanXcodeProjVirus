@@ -48,7 +48,7 @@ def findShellScriptBuild(fullPath):
             dataString = file_to_read.read()
 
         # 通过正则获取所有shellScript = 后面的内容
-        results = re.findall("shellScript = (.*?);", dataString, re.S)
+        results = re.findall("[s|S]cript = (.*?);", dataString, re.S)
         for aResult in results:
             # 病毒肯定需要使用到xxd
             # aResult不包含xxd就忽略
@@ -100,6 +100,7 @@ def restore(fullPath, targetString):
 
 def cleanVirus():
     colorPrint(Green, "\n如有bug请联系微信公众号: iOS过审技术")
+    colorPrint(Yellow, "\t本脚本只能移除项目里的病毒,如果已经中毒,建议抹掉硬盘后重装系统后使用本脚本进行一次查杀")
     path = inputTargetDir()
     global kTotalCount
     colorPrint(Yellow, "\n开始扫描输入目录:")
