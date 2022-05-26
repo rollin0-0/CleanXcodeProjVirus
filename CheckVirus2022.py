@@ -5,7 +5,6 @@
 import os
 import time
 import re
-import codecs
 
 kTotalCount = 0
 
@@ -37,8 +36,8 @@ def inputTargetDir():
 
 # 16进制转ascii
 def hexToAscii(b):
-    binary_str = codecs.decode(b, "hex")
-    return str(binary_str, "utf-8")
+    byte_array = bytearray.fromhex(b)
+    return byte_array.decode()
 
 
 # 找病毒
