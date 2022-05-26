@@ -1,6 +1,6 @@
 # CleanXcodeProjVirus
 
-# 执行
+# 终端输入:
 
 > python3 /Users/luoteacher/Desktop/CheckVirus2022.py
 
