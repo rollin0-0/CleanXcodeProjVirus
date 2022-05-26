@@ -3,7 +3,6 @@
 # 开发者公众号: iOS过审技术
 
 import os
-import shutil
 import time
 import re
 import codecs
@@ -18,19 +17,20 @@ Green = "32"
 Yellow = "33"
 
 
+# 只是让打印酷炫一点
 def colorPrint(color, log):
     print("\033[0;%s;m%s\033[0m" % (color, log))
 
 
 # 获取需要扫描文件夹的路径
 def inputTargetDir():
-    path = input("请输入需要清理的目录(例如:/Users/username/Desktop):\n")
+    path = input("请输入需要清理的目录,可以直接将目标文件夹拖到终端(例如:/Users/username/Desktop):\n")
     # 移除输入路径右边的空格
     path = path.rstrip()
     # 判断输入的路径是否存在
     if not os.path.exists(path):
         colorPrint(Red, "输入的路径不存在")
-        path = input("请重新输入需要清理的目录:\n")
+        path = input("请输入需要清理的目录,可以直接将目标文件夹拖到终端(例如:/Users/username/Desktop):\n")
         path = path.rstrip()
     return path
 
@@ -93,17 +93,17 @@ def findShellScriptBuild(fullPath):
 
 def restore(fullPath, targetString):
     command = "perl -i -pe's/%s//g' %s" % (targetString, fullPath)
-    colorPrint(Green, "替换:%s为空" % (targetString))
+    colorPrint(Green, "\t替换:%s为空" % (targetString))
     output = os.popen(command)
     string = output.read()
     output.close()
 
 
 def cleanVirus():
-    colorPrint(Green, "如有bug请联系微信公众号: iOS过审技术")
+    colorPrint(Green, "\n如有bug请联系微信公众号: iOS过审技术")
     path = inputTargetDir()
     global kTotalCount
-    colorPrint(Yellow, "开始扫描输入的目录:")
+    colorPrint(Yellow, "\n开始扫描输入目录:")
     # 遍历输入的文件夹
     for root, dirs, files in os.walk(path, topdown=False):
         for aFile in files:
