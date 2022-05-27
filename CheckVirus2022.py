@@ -21,6 +21,10 @@ def colorPrint(color, log):
     print("\033[0;%s;m%s\033[0m" % (color, log))
 
 
+def shellquote(path):
+    return "'" + path.replace("'", "'\\''") + "'"
+
+
 # 获取需要扫描文件夹的路径
 def inputTargetDir():
     path = input("请输入需要清理的目录,可以直接将目标文件夹拖到终端(例如:/Users/username/Desktop):\n")
@@ -91,6 +95,8 @@ def findShellScriptBuild(fullPath):
 
 
 def restore(fullPath, targetString):
+    # 避免路径中包含空格,出现找不到目标文件的bug
+    fullPath = shellquote(fullPath)
     command = "perl -i -pe's/%s//g' %s" % (targetString, fullPath)
     colorPrint(Green, "\t替换:%s为空" % (targetString))
     output = os.popen(command)
